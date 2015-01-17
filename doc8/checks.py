@@ -230,7 +230,7 @@ class CheckMaxLineLength(ContentCheck):
         for i, line in enumerate(parsed_file.lines_iter()):
             if len(line) > self._max_line_length:
                 if not utils.contains_url(line):
-                    yield (i + 1, 'D001', 'Line too long')
+                    yield (i + 1, 'D001', 'Line too long (%d > %d characters)' % (len(line), self._max_line_length))
 
     def _rst_checker(self, parsed_file):
         lines = list(parsed_file.lines_iter())
@@ -291,7 +291,7 @@ class CheckMaxLineLength(ContentCheck):
                     continue
                 if self._allow_long_titles and any_types(nodes, title_types):
                     continue
-                yield (i + 1, 'D001', 'Line too long')
+                yield (i + 1, 'D001', 'Line too long (%d > %d characters)' % (len(line), self._max_line_length))
 
     def report_iter(self, parsed_file):
         if parsed_file.extension.lower() != '.rst':
